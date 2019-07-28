@@ -14,7 +14,11 @@ class App extends Component {
   getStoreLocations = _ => {
     fetch("http://localhost:5500/getDB")
       .then(res => res.json())
-      .then(stores => this.setState({ stores }))
+      .then(stores =>
+        this.setState({ stores }, () =>
+          console.log("STORES FETCHED...", stores)
+        )
+      )
 
       .catch(err => console.log(err));
   };
