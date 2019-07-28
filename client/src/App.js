@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+//import Results from "./Results";
 
 class App extends Component {
   state = {
@@ -12,17 +13,32 @@ class App extends Component {
   //fetch to grab the stores
   getStoreLocations = _ => {
     fetch("http://localhost:5500/getDB")
-      .then(response => console.log(response.json()))
-      .then(({ response }) => this.setState({ stores: response.stores }))
+      .then(res => res.json())
+      .then(stores => this.setState({ stores }))
 
-      .catch(error => console.log(error));
+      .catch(err => console.log(err));
   };
 
-  showStores = stores => <div key={stores.id}>{stores.storeName}</div>;
+  //showStores = stores => <div key={stores.id}>{stores.storeName}</div>;
 
   render() {
     const { stores } = this.state;
-    return <div className="App"> {stores.map(this.showStores)}</div>;
+    return (
+      <div className="App">
+        {" "}
+        {stores.map(stores => (
+          <p key={stores.id}>
+            {stores.storeName}
+            {" ,"}
+            {stores.storeAddress}
+            {" ,"}
+            {stores.latitude}
+            {" ,"}
+            {stores.longitude}
+          </p>
+        ))}
+      </div>
+    );
   }
 }
 
